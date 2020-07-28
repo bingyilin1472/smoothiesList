@@ -8,6 +8,7 @@ export default new Router({
   routes: [
     {
       path: '/',
+      // 這個name之後可以使router不用url location方式去呼叫
       name: 'Index',
       component: Index
     }
