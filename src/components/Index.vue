@@ -33,8 +33,9 @@
 </template>
 
 <script>
+import db from '../firebase/init'
 export default {
-  name: 'HelloWorld',
+  name: 'Index',
   data () {
     return {
       // array of objects
@@ -42,10 +43,11 @@ export default {
       smoothies:[
         // slug有小塊/蛞蝓的意思在，這邊是作為之後可能要編輯時候，呼叫的部分core path(URL)
         // 由於URL路徑上是沒有大小寫，因此會編寫成ex: ninja-brew
-        {title: 'Ninja Brew', slug: 'ninja-brew', ingredients:['apple', 'coffee', 'milk'], id:'1'},
-        {title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id:'2'},
-        {title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id:'3'},
-        {title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id:'4'}
+        // {title: 'Ninja Brew', slug: 'ninja-brew', ingredients:['apple', 'coffee', 'milk'], id:'1'},
+        // {title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id:'2'},
+        // {title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id:'3'},
+        // {title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id:'4'}
+
       ]
     }
   },
@@ -56,6 +58,19 @@ export default {
         return smoothie.id != id
       })
     }
+  },
+  created() {
+    // 希望fetch data from the firestore
+    db.collection('Smoothies').get().then(snapshot => {
+      snapshot.forEach(doc => {
+        // 這個smoothie僅為此處的local variable不希望擴及整個func因此用let宣告
+        let smoothie = doc.data()
+        // 加入id key/field透過doc.id
+        smoothie.id = doc.id
+        console.log(smoothie)
+        this.smoothies.push(smoothie)
+      })
+    })
   }
 }
 </script>
