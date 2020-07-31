@@ -6,7 +6,7 @@
       <!-- 針對樣式套在不同的區塊，而將router-link至於不同之處來去做listening -->
         <!-- 樣式在內，就將router-link至於外 -->
         <router-link to="">
-          <span class="nav-title">Smoothies List</span>
+          <span class="nav-title">Smoothies List!!</span>
         </router-link>
         <!-- 樣式在外，就將router-link至於內(而這個外部a是沒有href因此不會有連結效果 -->
         <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">

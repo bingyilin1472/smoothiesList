@@ -54,14 +54,26 @@ export default {
   methods:{
     deleteSmoothie(id){
       //這是採用ES6的arrow function，每次將smoothie帶入作為參數，這味道跟python有點像
-      this.smoothies = this.smoothies.filter(smoothie =>{
-        return smoothie.id != id
+      // this.smoothies = this.smoothies.filter(smoothie =>{
+      //   return smoothie.id != id
+      // })
+
+      console.log(id)
+      // .doc(id)可以get某筆資料，其中有delete()方法可以刪除
+      // delete方法也是一個promise物件(async任務)，因此他後面可以再接一個then去做處理
+      db.collection('smoothies').doc(id).delete().then(()=> {
+        // 因為為刪除任務，不像get()要逐筆處理，這邊要處理的問題在於
+        // 刪除了，firestore上的資料後，但是並沒有改變我們已經load到data的資料
+        // 因此我們再對smoothies內容做一個顧慮，不是刪除目標的id就給他true留下來，達到database跟view同步sysnc
+        this.smoothies = this.smoothies.filter(smoothie => {
+          return smoothie.id != id
+        })
       })
-    }
+      }
   },
-  created() {
+  created(){
     // 希望fetch data from the firestore
-    db.collection('Smoothies').get().then(snapshot => {
+    db.collection('smoothies').get().then(snapshot => {
       snapshot.forEach(doc => {
         // 這個smoothie僅為此處的local variable不希望擴及整個func因此用let宣告
         let smoothie = doc.data()

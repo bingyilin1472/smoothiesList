@@ -42,7 +42,7 @@ npm run build --report
 
       // app initialization
       const firebaseApp = firebase.initializeApp(firebaseConfig);
-      // 建立想要的服務instance(firestore)
-      var db = firebase.firestore()
+      // 建立想要的服務instance(firestore)，讓他可以被任意名稱引入到想要的component中
+      export default firebase.firestore()
 ```
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
