@@ -12,6 +12,7 @@
     -->
     <!-- 設置key的用意是為了防止重複產生DOM而使得資源浪費，將key作為一個辨識的依據
          v-for好像可以有三個值可以取出 value、index、key(若沒綁定key可以用index綁定 :key="index"
+         若用index可能就得v-for="(smoothie, index) in smoothies" :key="index"
     -->
     <div class="card" v-for="smoothie in smoothies" :key="smoothies.id">
       <div class="card-content">
@@ -74,12 +75,14 @@ export default {
   created(){
     // 希望fetch data from the firestore
     db.collection('smoothies').get().then(snapshot => {
+      // iterable obj可以配合forEach處理
       snapshot.forEach(doc => {
         // 這個smoothie僅為此處的local variable不希望擴及整個func因此用let宣告
         let smoothie = doc.data()
-        // 加入id key/field透過doc.id
+        // 加入id key/field透過doc.id，作法類似python dict的增加key
         smoothie.id = doc.id
         console.log(smoothie)
+        // array物件有提供push可以放進json內容
         this.smoothies.push(smoothie)
       })
     })

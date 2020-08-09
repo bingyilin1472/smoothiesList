@@ -5,12 +5,17 @@
       <div class="nav-content">
       <!-- 針對樣式套在不同的區塊，而將router-link至於不同之處來去做listening -->
         <!-- 樣式在內，就將router-link至於外 -->
-        <router-link to="">
+        <!-- 會回到顯示頁面smoothies，:to做綁定 -->
+        <router-link :to="{ name: 'Index' }">
+          <!-- router-link還可以包覆inline block使其有連接作用，inline element確實能做為content -->
           <span class="nav-title">Smoothies List!!</span>
         </router-link>
         <!-- 樣式在外，就將router-link至於內(而這個外部a是沒有href因此不會有連結效果 -->
         <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
-          <router-link to="">
+          <!-- 希望切換到AddSmoothie component，用name去對應router，:to做綁定
+               因為我們要的不是a href去呼叫server，可以將router=link :to來實踐browser切換component
+           -->
+          <router-link :to="{ name: 'AddSmoothie' }">
             <i class="material-icons">add</i>
           </router-link>
         </a>
